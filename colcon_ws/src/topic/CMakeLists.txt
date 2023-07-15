@@ -13,6 +13,7 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 
+# Executable
 add_executable(hello src/hello.cpp)
 target_include_directories(hello PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -22,11 +23,17 @@ target_compile_features(hello PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++
 add_executable(publisher src/publisher.cpp)
 ament_target_dependencies(publisher rclcpp std_msgs)
 
-install(TARGETS hello
-  DESTINATION lib/${PROJECT_NAME})
+add_executable(subscriber src/subscriber.cpp)
+ament_target_dependencies(subscriber rclcpp std_msgs)
+
+# Install
+install(TARGETS hello DESTINATION lib/${PROJECT_NAME})
 
 install(TARGETS publisher DESTINATION lib/${PROJECT_NAME})
 
+install(TARGETS subscriber DESTINATION lib/${PROJECT_NAME})
+
+# -----------------------------------------------------
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
