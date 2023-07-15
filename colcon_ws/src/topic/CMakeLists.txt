@@ -10,6 +10,8 @@ find_package(ament_cmake REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(std_msgs REQUIRED)
 
 add_executable(hello src/hello.cpp)
 target_include_directories(hello PUBLIC
@@ -17,8 +19,13 @@ target_include_directories(hello PUBLIC
   $<INSTALL_INTERFACE:include>)
 target_compile_features(hello PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
 
+add_executable(publisher src/publisher.cpp)
+ament_target_dependencies(publisher rclcpp std_msgs)
+
 install(TARGETS hello
   DESTINATION lib/${PROJECT_NAME})
+
+install(TARGETS publisher DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
