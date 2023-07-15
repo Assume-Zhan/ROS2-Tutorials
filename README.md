@@ -119,3 +119,66 @@ ros2 service type <service name>
 ```bash=1
 ros2 service call /spawn turtlesim/srv/Spawn "{x: 2, y: 2, theta: 0.2, name: ''}"
 ```
+
+### ROS2 param
+
+- Same as ```rosparam```
+
+- List all params
+```bash=1
+ros2 param list
+```
+
+- Get parameter
+```bash=1
+ros2 param get <node name> <parameter name>
+```
+
+- Set parameter
+```bash=1
+ros2 param set <node name> <parameter name> <value>
+```
+
+- Show all parameter and its value
+  - More useful to *pass in yaml file*
+```bash=1
+ros2 param dump <node name>
+```
+
+- Load parameters
+```bash=1
+ros2 param load <node name> <parameter file>
+```
+
+### ROS2 launch
+
+- ```roslaunch```
+
+- Launch launch file ( Python or xml )
+```bash=1
+ros2 launch turtlesim multisim.launch.py
+```
+
+### ROS2 bag
+
+- ```rosbag```
+
+- Record
+```bash=1
+ros2 bag record <topic name>
+```
+
+- Specified output file name
+```bash=1
+ros2 bag record -o hello <topic name>
+```
+
+- Play
+```bash=1
+ros2 bag play <bag file name>
+```
+
+---
+
+- [TODO] : learn action
+  - [CLI action](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Actions/Understanding-ROS2-Actions.html)
