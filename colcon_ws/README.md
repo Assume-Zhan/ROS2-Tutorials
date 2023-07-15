@@ -19,3 +19,23 @@ colcon build --symlink-install
 
 ## Create package
 
+### Check before build
+
+- Dependencies
+```bash
+# In workspace
+rosdep install -i --from-path src --rosdistro humble -y
+```
+
+- Create a package
+```bash
+ros2 pkg create --build-type ament_cmake <package name>
+ros2 pkg create --build-type ament_cmake --node-name <node name> <package name>
+```
+
+- Build packages
+```bash
+colcon build
+colcon build --packages-select <package name>
+# Remember to source !
+```
