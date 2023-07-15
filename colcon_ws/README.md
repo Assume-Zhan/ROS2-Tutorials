@@ -16,3 +16,6 @@ Our workspace, ros2_ws, will be an overlay on top of the existing ROS 2 installa
 ```bash
 colcon build --symlink-install
 ```
+
+## Create package
+
