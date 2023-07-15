@@ -68,7 +68,7 @@ ros2 topic hz <topic name>
 
 ### ROS2 interface
 
-- Same as ```rosmsg``` in ROS1
+- Same as ```rosmsg``` in ROS1, but it add more **interface**
 
 ```bash=1
 usage: ros2 interface [-h] Call `ros2 interface <command> -h` for more detailed usage. ...
@@ -90,6 +90,32 @@ Commands:
 ```bash=1
 # In ROS1
 rosmsg show <message type>
+
+# In ROS2
 ros2 interface show <message type>
 ros2 interface show geometry_msgs/msg/Twist
+```
+- Show service type
+```bash=1
+ros2 interface show <service type>
+```
+
+### ROS2 service
+
+- Same as ```rosservice``` in ROS1
+
+- List all services
+```bash=1
+ros2 service list
+```
+
+- List service type
+```bash=1
+ros2 service list -t
+ros2 service type <service name>
+```
+
+- Service call
+```bash=1
+ros2 service call /spawn turtlesim/srv/Spawn "{x: 2, y: 2, theta: 0.2, name: ''}"
 ```
