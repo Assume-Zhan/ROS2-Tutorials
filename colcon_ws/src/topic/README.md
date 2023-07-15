@@ -76,3 +76,7 @@ rclcpp::spin(std::make_shared<MinimalSubscriber>());
 ```cpp
 RCLCPP_INFO(this->get_logger(), "something %d", var);
 ```
+
+## TODO
+
+- [Pub/Sub python version](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html)
