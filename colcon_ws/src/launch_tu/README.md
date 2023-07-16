@@ -50,4 +50,19 @@ Node(
 ),
 ```
 
+- Add launch dependencies
+```xml
+<exec_depend>ros2launch</exec_depend>
+```
+
+- Install launch folder ```CMakeList.txt```
+```txt
+install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
+```
+
+- Launch
+```bash
+ros2 launch launch_tu test.launch.py
+```
+
 ## Maintain

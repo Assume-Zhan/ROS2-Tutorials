@@ -189,6 +189,8 @@ ros2 bag play <bag file name>
   - [Parameter Python](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-Python.html)
 - [ROS2 Doctor](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Getting-Started-With-Ros2doctor.html)
 - [ROS2 Plugin](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Pluginlib.html)
+- [Launch structure for Python](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Launch-system.html)
+- [Advanced topic for Launch +3](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Using-Substitutions.html)
 
 ## Extra Reading
 - [Maintain Dependencies](https://docs.ros.org/en/humble/Tutorials/Intermediate/Rosdep.html)
