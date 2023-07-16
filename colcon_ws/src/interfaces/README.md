@@ -16,7 +16,26 @@ float64 radius
 
 - Specified in ```CMakeList.txt```
 ```txt
+# Message dependencies
+find_package(geometry_msgs REQUIRED)
 
+# Message library generator
+find_package(rosidl_default_generators REQUIRED)
+```
+```txt
+# Add message file
+rosidl_generate_interfaces(${PROJECT_NAME}
+    "msg/Test.msg"
+    DEPENDENCIES geometry_msgs # Add packages that above messages depend on, in this case geometry_msgs for Sphere.msg
+)
+```
+
+- Add in ```package.xml```
+```xml
+<depend>geometry_msgs</depend>
+<buildtool_depend>rosidl_default_generators</buildtool_depend>
+<exec_depend>rosidl_default_runtime</exec_depend>
+<member_of_group>rosidl_interface_packages</member_of_group>
 ```
 
 
@@ -34,4 +53,17 @@ mkdir srv
 float64 x
 ---
 bool equal
+```
+
+- Specified in ```CMakeList.txt```
+```txt
+# Message library generator
+find_package(rosidl_default_generators REQUIRED)
+```
+```txt
+# Add message file
+rosidl_generate_interfaces(${PROJECT_NAME}
+    "srv/Test.srv"
+    DEPENDENCIES geometry_msgs # Add packages that above messages depend on, in this case geometry_msgs for Sphere.msg
+)
 ```
