@@ -12,6 +12,7 @@ find_package(ament_cmake REQUIRED)
 # find_package(<dependency> REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(interfaces REQUIRED)
 
 # Executable
 add_executable(hello src/hello.cpp)
@@ -21,7 +22,7 @@ target_include_directories(hello PUBLIC
 target_compile_features(hello PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
 
 add_executable(publisher src/publisher.cpp)
-ament_target_dependencies(publisher rclcpp std_msgs)
+ament_target_dependencies(publisher rclcpp std_msgs interfaces)
 
 add_executable(subscriber src/subscriber.cpp)
 ament_target_dependencies(subscriber rclcpp std_msgs)
