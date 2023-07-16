@@ -38,6 +38,11 @@ rosidl_generate_interfaces(${PROJECT_NAME}
 <member_of_group>rosidl_interface_packages</member_of_group>
 ```
 
+- Test add include folder
+```cpp
+#include "<package name>/msg/<message name in Lower case>.hpp"
+```
+
 
 ## Custom service
 
@@ -65,5 +70,29 @@ find_package(rosidl_default_generators REQUIRED)
 rosidl_generate_interfaces(${PROJECT_NAME}
     "srv/Test.srv"
     DEPENDENCIES geometry_msgs # Add packages that above messages depend on, in this case geometry_msgs for Sphere.msg
+)
+```
+
+- Test add include folder
+```cpp
+#include "<package name>/srv/<service name in Lower case>.hpp"
+```
+
+
+- ```CMakeList.txt```
+```cpp
+set(msg_files
+  "msg/Message1.msg"
+  "msg/Message2.msg"
+)
+
+set(srv_files
+  "srv/Service1.srv"
+  "srv/Service2.srv"
+)
+
+rosidl_generate_interfaces(${PROJECT_NAME}
+  ${msg_files}
+  ${srv_files}
 )
 ```
