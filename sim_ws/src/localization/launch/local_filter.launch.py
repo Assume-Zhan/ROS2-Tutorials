@@ -17,7 +17,6 @@ def generate_launch_description():
             executable='ekf_node',
             name='ekf_velocity',
             remappings=[
-                ('/odometry/filtered', '/global_filter'),
                 ('/set_pose', '/initialpose'),
             ],
             parameters = [config]
