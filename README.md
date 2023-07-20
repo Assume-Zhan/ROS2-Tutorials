@@ -66,6 +66,42 @@ ros2 topic pub --once /turtle1/cmd_vel geometry_msgs/msg/Twist \
 ros2 topic hz <topic name>
 ```
 
+- Info
+```bash
+# Basic information
+ros2 topic info /odom
+# Output: 
+# Type: nav_msgs/msg/Odometry
+# Publisher count: 0
+# Subscription count: 1
+```
+```bash
+# More information
+ros2 topic info -v /odom
+# Output:
+# Type: nav_msgs/msg/Odometry
+
+# Publisher count: 0
+
+# Subscription count: 1
+
+# Node name: ekf_velocity
+# Node namespace: /
+# Topic type: nav_msgs/msg/Odometry
+# Endpoint type: SUBSCRIPTION
+# GID: 01.0f.df.aa.21.27.ae.b0.01.00.00.00.00.00.1f.04.00.00.00.00.00.00.00.00
+# QoS profile:
+#   Reliability: BEST_EFFORT
+#   History (Depth): UNKNOWN
+#   Durability: VOLATILE
+#   Lifespan: Infinite
+#   Deadline: Infinite
+#   Liveliness: AUTOMATIC
+#   Liveliness lease duration: Infinite
+```
+
+
+
 ### ROS2 interface
 
 - Same as ```rosmsg``` in ROS1, but it add more **interface**
