@@ -173,3 +173,56 @@ IncludeLaunchDescription(
     }.items()
 )
 ```
+
+### Event handler
+
+- Prepare
+```py
+from launch.actions import RegisterEventHandler
+from launch.event_handlers import OnExecutionComplete, OnProcessExit, OnProcessIO, OnProcessStart, OnShutdown
+```
+
+- Basic
+    - **Target Execution** + **Callback function**
+```py
+RegisterEventHandler(
+    Event(
+        target_action = "...",
+        on_<event> = [
+            function1,
+            function2,
+            "..."
+        ]
+    )
+)
+```
+
+- OnProcessStart
+```py
+RegisterEventHandler(
+    OnProcessStart(
+        target_action=turtle1,
+        on_start=[
+            LogInfo(msg='Start...'),
+            spawn_turtle
+        ]
+    )
+)
+```
+
+- OnProcessIO
+```py
+RegisterEventHandler(
+    OnProcessIO(
+        target_action=spawn_turtle,
+        on_stdout=lambda event: LogInfo(
+            msg='Spawn request says "{}"'.format(
+                event.text.decode().strip())
+        )
+    )
+),
+```
+
+- OnExecutionComplete
+- OnProcessExit
+- OnShutdown
