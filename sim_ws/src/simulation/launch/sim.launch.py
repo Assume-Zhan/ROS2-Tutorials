@@ -57,13 +57,6 @@ def generate_launch_description():
         shell=True
     )
     
-    wheel_steer = ExecuteProcess(
-        cmd=[[
-            FindExecutable(name="rqt_robot_steering"),
-        ]],
-        shell=True
-    )
-    
     scan_tf2 = Node(
         package = "tf2_ros",
         executable = "static_transform_publisher",
@@ -95,5 +88,5 @@ def generate_launch_description():
         gazebo_env,
         
         # Nodes
-        gazebo, rviz, scan_tf2, wheel_steer, link_tf2
+        gazebo, rviz, scan_tf2, link_tf2
     ])
