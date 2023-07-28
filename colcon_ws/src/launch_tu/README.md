@@ -73,32 +73,6 @@ ros2 launch launch_tu test.launch.py --show-args
 ## Advanced
 > Variable evaluating in **Execution Time**
 
-### Path for other Launch file
-
-- Prepare
-```py
-from launch_ros.substitutions import FindPackageShare
-from launch.substitutions import PathJoinSubstitution
-```
-
-- Find package path
-```py
-FindPackageShare('package name')
-FindPackageShare('launch_tu')
-```
-
-- Joint launch file into package path
-```py
-PathJoinSubstitution([
-    "...",
-    "..."
-])
-PathJoinSubstitution([
-    FindPackageShare('launch_tu'),
-    "launch", "test.launch.py"
-])
-```
-
 ### Argument Declaration
 
 - Prepare
@@ -154,4 +128,48 @@ condition=IfCondition(
         '1 == 2'
     ])
 ),
+```
+
+### Path for other Launch file
+
+- Prepare
+```py
+from launch_ros.substitutions import FindPackageShare
+from launch.substitutions import PathJoinSubstitution
+```
+
+- Find package path
+```py
+FindPackageShare('package name')
+FindPackageShare('launch_tu')
+```
+
+- Joint launch file into package path
+```py
+PathJoinSubstitution([
+    "...",
+    "..."
+])
+PathJoinSubstitution([
+    FindPackageShare('launch_tu'),
+    "launch", "test.launch.py"
+])
+```
+
+### Include other launch file
+
+- Prepare
+```py
+from launch.actions import IncludeLaunchDescription
+```
+
+- Include and Launch
+    - Launch argument is **dictionary**
+```py
+IncludeLaunchDescription(
+    PythonLaunchDescriptionSource(['path']),
+    launch_arguments={
+        'ns': 'turtlesim2',
+    }.items()
+)
 ```
