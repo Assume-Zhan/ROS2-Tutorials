@@ -14,7 +14,7 @@ mkdir launch
 touch test.launch.py # vim test.launch
 ```
 
-## Write launch in Python
+## Basic Usage ( Python )
 
 - Import
 ```python
@@ -50,12 +50,12 @@ Node(
 ),
 ```
 
-- Add launch dependencies
+- Important : Add launch dependencies
 ```xml
 <exec_depend>ros2launch</exec_depend>
 ```
 
-- Install launch folder ```CMakeList.txt```
+- Important : Install launch folder ```CMakeList.txt```
 ```txt
 install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
 ```
@@ -65,4 +65,34 @@ install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
 ros2 launch launch_tu test.launch.py
 ```
 
-## Maintain
+## Advanced
+> Variable evaluating in **Execution Time**
+
+### Path for other Launch file
+
+- Prepare
+```py
+from launch_ros.substitutions import FindPackageShare
+from launch.substitutions import PathJoinSubstitution
+```
+
+- Find package path
+```py
+FindPackageShare('package name')
+FindPackageShare('launch_tu')
+```
+
+- Joint launch file into package path
+```py
+PathJoinSubstitution([
+    "...",
+    "..."
+])
+PathJoinSubstitution([
+    FindPackageShare('launch_tu'),
+    "launch", "test.launch.py"
+])
+```
+
+### Launch or Execute With condition
+

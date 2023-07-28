@@ -1,9 +1,16 @@
 from launch import LaunchDescription
 from launch_ros.actions import Node
+from launch.conditions import IfCondition
+from launch.substitutions import LaunchConfiguration, PythonExpression
 
 def generate_launch_description():
     return LaunchDescription([
         Node(
+            condition=IfCondition(
+                PythonExpression([
+                    '1 == 2'
+                ])
+            ),
             package='turtlesim',
             namespace='turtlesim1',
             executable='turtlesim_node',
