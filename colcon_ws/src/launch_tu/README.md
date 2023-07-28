@@ -65,6 +65,11 @@ install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
 ros2 launch launch_tu test.launch.py
 ```
 
+- Launch with argument
+```bash
+ros2 launch launch_tu test.launch.py --show-args
+```
+
 ## Advanced
 > Variable evaluating in **Execution Time**
 
@@ -94,5 +99,59 @@ PathJoinSubstitution([
 ])
 ```
 
+### Argument Declaration
+
+- Prepare
+```py
+from launch.actions import DeclareLaunchArgument
+from launch.substitutions import LaunchConfiguration
+```
+
+- Declare an argument which can **be defined by above launch file**
+    - We need ```LaunchConfiguration``` to get argument value in any par of launch file
+```py
+robot_number = LaunchConfiguration('robot_number')
+arg = DeclareLaunchArgument(
+    "robot_number",
+    default_value = "red"
+)
+```
+
+### Execute CLI command
+
+- Prepare
+```py
+from launch.actions import DeclareLaunchArgument, ExecuteProcess
+```
+
+- Execute the process
+```py
+spawn_turtle = ExecuteProcess(
+    cmd=[[
+        'ros2 service call ',
+        turtlesim_ns,
+        '/spawn ',
+        'turtlesim/srv/Spawn ',
+        '"{x: 2, y: 2, theta: 0.2}"'
+    ]],
+    shell=True
+)
+```
+
 ### Launch or Execute With condition
 
+- Prepare
+```py
+from launch.conditions import IfCondition
+from launch.substitutions import PythonExpression
+```
+
+- In a ```Node``` or ```Execution```
+    - You can also put ```Launch Argument into PythonExpression```
+```py
+condition=IfCondition(
+    PythonExpression([
+        '1 == 2'
+    ])
+),
+```

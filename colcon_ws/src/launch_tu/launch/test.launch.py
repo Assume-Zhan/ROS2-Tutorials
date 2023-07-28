@@ -1,18 +1,25 @@
 from launch import LaunchDescription
-from launch_ros.actions import Node
+from launch.actions import DeclareLaunchArgument, ExecuteProcess, TimerAction
 from launch.conditions import IfCondition
 from launch.substitutions import LaunchConfiguration, PythonExpression
 
+from launch_ros.actions import Node
+
 def generate_launch_description():
+    
+    
+    # Declare launch argument
+    ns = LaunchConfiguration('ns')
+    
+    ns_arg = DeclareLaunchArgument(
+        "ns", default_value = 'ns1'
+    )
+    
     return LaunchDescription([
+        ns_arg,
         Node(
-            condition=IfCondition(
-                PythonExpression([
-                    '1 == 2'
-                ])
-            ),
+            namespace = ns,
             package='turtlesim',
-            namespace='turtlesim1',
             executable='turtlesim_node',
             name='sim'
         ),
