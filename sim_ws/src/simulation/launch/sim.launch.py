@@ -67,13 +67,22 @@ def generate_launch_description():
     scan_tf2 = Node(
         package = "tf2_ros",
         executable = "static_transform_publisher",
-        name = "foot_to_scan",
-        arguments = ["0", "0", "0", "0", "0", "0", "base_footprint", "base_scan"]
-        
+        name = "link_to_scan",
+        arguments = ["0", "0", "0", "0", "0", "0", "base_footprint", "base_link"]
+    )
+    
+    link_tf2 = Node(
+        package = "tf2_ros",
+        executable = "static_transform_publisher",
+        name = "foot_to_link",
+        arguments = ["0", "0", "0", "0", "0", "0", "base_link", "base_scan"]
     )
     
     slam = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(slam_toolbox_path)
+        PythonLaunchDescriptionSource(slam_toolbox_path),
+        launch_arguments={
+            'use_sim_time': "True",
+        }.items(),
     )
     # -------------------------------
     
@@ -86,5 +95,5 @@ def generate_launch_description():
         gazebo_env,
         
         # Nodes
-        gazebo, rviz, scan_tf2, slam, wheel_steer
+        gazebo, rviz, scan_tf2, wheel_steer, link_tf2
     ])
