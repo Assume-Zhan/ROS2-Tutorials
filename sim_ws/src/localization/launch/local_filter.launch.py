@@ -20,6 +20,9 @@ def generate_launch_description():
             remappings=[
                 ('/set_pose', '/initialpose'),
             ],
-            parameters = [config]
+            parameters = [
+                {"use_sim_time": True},
+                config
+            ]
         )
     ])

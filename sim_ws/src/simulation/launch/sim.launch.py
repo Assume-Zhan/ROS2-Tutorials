@@ -32,6 +32,11 @@ def generate_launch_description():
         FindPackageShare("slam_toolbox"), 
         "launch", "online_async_launch.py"
     ])
+    
+    gazebo_path = PathJoinSubstitution([
+        FindPackageShare("gazebo_ros"), 
+        "launch", "gazebo.launch.py"
+    ])
     # -------------------------------
     
     # Setup Environment variables
@@ -47,17 +52,15 @@ def generate_launch_description():
         namespace = "",
         executable = "rviz2",
         name = "rviz2",
-        arguments = ["-d", [rviz_path]]
+        arguments = ["-d", [rviz_path]],
+        parameters=[{'use_sim_time': False}]
     )
     
-    gazebo = ExecuteProcess(
-        cmd=[[
-            FindExecutable(name="gazebo"),
-        ]],
-        shell=True
+    gazebo = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(gazebo_path)
     )
     
-    scan_tf2 = Node(
+    foot_to_link_tf2 = Node(
         package = "tf2_ros",
         executable = "static_transform_publisher",
         name = "link_to_scan",
@@ -65,7 +68,7 @@ def generate_launch_description():
         parameters=[{'use_sim_time': True}]
     )
     
-    link_tf2 = Node(
+    link_to_scan_tf2 = Node(
         package = "tf2_ros",
         executable = "static_transform_publisher",
         name = "foot_to_link",
@@ -77,7 +80,7 @@ def generate_launch_description():
         PythonLaunchDescriptionSource(slam_toolbox_path),
         launch_arguments={
             'use_sim_time': "True",
-        }.items(),
+        }.items()
     )
     # -------------------------------
     
@@ -89,6 +92,6 @@ def generate_launch_description():
         # Env
         gazebo_env,
         
-        # Nodes
-        gazebo, rviz, scan_tf2
+        # Nodes or Launch
+        rviz, gazebo
     ])

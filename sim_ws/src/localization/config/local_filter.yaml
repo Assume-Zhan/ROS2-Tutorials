@@ -6,13 +6,13 @@ ekf_velocity:
 
         two_d_mode: true
 
-        history_length: 0.2
+        history_length: 0.4
 
-        transform_time_offset: 0.0
+        transform_time_offset: 0.05
 
         transform_timeout: 0.0
 
-        print_diagnostics: false
+        print_diagnostics: true
 
         debug: false
 
@@ -20,7 +20,7 @@ ekf_velocity:
 
         permit_corrected_publication: false
 
-        publish_acceleration: false
+        publish_acceleration: true
 
         publish_tf: true
 
@@ -37,7 +37,7 @@ ekf_velocity:
                        false, false, true,
                        false, false, false]
 
-        odom0_queue_size: 2
+        odom0_queue_size: 20
 
         odom0_differential: false
 
