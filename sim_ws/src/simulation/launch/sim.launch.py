@@ -61,14 +61,16 @@ def generate_launch_description():
         package = "tf2_ros",
         executable = "static_transform_publisher",
         name = "link_to_scan",
-        arguments = ["0", "0", "0", "0", "0", "0", "base_footprint", "base_link"]
+        arguments = ["0", "0", "0", "0", "0", "0", "base_footprint", "base_link"],
+        parameters=[{'use_sim_time': True}]
     )
     
     link_tf2 = Node(
         package = "tf2_ros",
         executable = "static_transform_publisher",
         name = "foot_to_link",
-        arguments = ["0", "0", "0", "0", "0", "0", "base_link", "base_scan"]
+        arguments = ["0", "0", "0", "0", "0", "0", "base_link", "base_scan"],
+        parameters=[{'use_sim_time': True}]
     )
     
     slam = IncludeLaunchDescription(
@@ -88,5 +90,5 @@ def generate_launch_description():
         gazebo_env,
         
         # Nodes
-        gazebo, rviz
+        gazebo, rviz, scan_tf2
     ])
