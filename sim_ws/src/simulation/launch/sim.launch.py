@@ -1,5 +1,8 @@
+import os
+
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
+from ament_index_python.packages import get_package_share_directory
 
 from launch import LaunchDescription
 from launch.actions import SetEnvironmentVariable
@@ -9,13 +12,6 @@ from launch.substitutions import PathJoinSubstitution, LaunchConfiguration, Find
 
 
 def generate_launch_description():
-    
-    # Declare argument ( Namespace )
-    sim_ns = LaunchConfiguration("sim_ns")
-    sim_ns_arg = DeclareLaunchArgument(
-        "sim_ns", default_value = "simulation"
-    )
-    # -------------------------------
     
     # Declare more path
     model_path = PathJoinSubstitution([
@@ -37,6 +33,28 @@ def generate_launch_description():
         FindPackageShare("gazebo_ros"), 
         "launch", "gazebo.launch.py"
     ])
+    
+    local_path = PathJoinSubstitution([
+        FindPackageShare("localization"), 
+        "launch", "local_filter.launch.py"
+    ])
+    
+    world_path = PathJoinSubstitution([
+        FindPackageShare("simulation"), 
+        "gazebo", "sim_world.world"
+    ])
+    # -------------------------------
+    
+    # Declare argument ( Namespace )
+    sim_ns = LaunchConfiguration("sim_ns")
+    sim_ns_arg = DeclareLaunchArgument(
+        "sim_ns", default_value = "simulation"
+    )
+
+    world = LaunchConfiguration("world")
+    world_arg = DeclareLaunchArgument(
+        "world", default_value = world_path
+    )
     # -------------------------------
     
     # Setup Environment variables
@@ -57,7 +75,8 @@ def generate_launch_description():
     )
     
     gazebo = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(gazebo_path)
+        PythonLaunchDescriptionSource(gazebo_path),
+        launch_arguments={'world': world}.items()
     )
     
     # Static TF : base_footprint -> base_link
@@ -93,16 +112,21 @@ def generate_launch_description():
             'use_sim_time': "True",
         }.items()
     )
+    
+    local = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(local_path)
+    )
     # -------------------------------
     
     # Launch description
     return LaunchDescription([
         # Arguments
-        sim_ns_arg,
+        sim_ns_arg, world_arg,
         
         # Env
         gazebo_env,
         
         # Nodes or Launch
-        rviz, gazebo, foot_to_link_tf2, link_to_scan_tf2, link_to_imu_tf2
+        rviz, gazebo, foot_to_link_tf2, link_to_scan_tf2, link_to_imu_tf2, local, slam
     ])
+    # -------------------------------
