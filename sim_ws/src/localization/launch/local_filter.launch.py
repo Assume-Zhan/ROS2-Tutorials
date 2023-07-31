@@ -16,6 +16,7 @@ def generate_launch_description():
             package='robot_localization',
             executable='ekf_node',
             name='ekf_velocity',
+            output='screen',
             remappings=[
                 ('/set_pose', '/initialpose'),
             ],

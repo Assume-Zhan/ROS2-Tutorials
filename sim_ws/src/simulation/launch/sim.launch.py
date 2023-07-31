@@ -30,7 +30,7 @@ def generate_launch_description():
     
     slam_toolbox_path = PathJoinSubstitution([
         FindPackageShare("slam_toolbox"), 
-        "launch", "online_sync_launch.py"
+        "launch", "online_async_launch.py"
     ])
     # -------------------------------
     
@@ -88,5 +88,5 @@ def generate_launch_description():
         gazebo_env,
         
         # Nodes
-        gazebo, rviz, scan_tf2, link_tf2
+        gazebo, rviz
     ])

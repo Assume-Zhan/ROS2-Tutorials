@@ -2,35 +2,37 @@
 ekf_velocity:
     ros__parameters:
         frequency: 100.0
-        sensor_timeout: 0.0
+        sensor_timeout: 0.1
 
-        two_d_mode: false
+        two_d_mode: true
+
+        history_length: 0.2
 
         transform_time_offset: 0.0
 
         transform_timeout: 0.0
 
-        print_diagnostics: true
+        print_diagnostics: false
 
         debug: false
 
-        debug_out_file: /path/to/debug/file.txt
+        debug_out_file: "/home/assume/ros_ws/tutorial_ws/sim_ws/debug.txt"
 
         permit_corrected_publication: false
 
-        publish_acceleration: true
+        publish_acceleration: false
 
         publish_tf: true
 
-        map_frame: map  
-        odom_frame: odom  
-        base_link_frame: base_footprint 
+        map_frame: map
+        odom_frame: odom
+        base_link_frame: base_footprint
         world_frame: odom
 
-        odom0: odom
+        odom0: /odom
 
-        odom0_config: [false,  false,  false,
-                       false, false, false,
+        odom0_config: [true,  true,  false,
+                       false, false, true,
                        true, true, false,
                        false, false, true,
                        false, false, false]
@@ -44,7 +46,7 @@ ekf_velocity:
         odom0_pose_use_child_frame: false
 
         odom0_pose_rejection_threshold: 5.0
-        odom0_twist_rejection_threshold: 100.0
+        odom0_twist_rejection_threshold: 5.0
 
         # imu0: /imu
         # imu0_config: [false, false, false,
@@ -70,9 +72,9 @@ ekf_velocity:
 
         use_control: true
 
-        stamped_control: false
+        stamped_control: true
 
-        control_timeout: 0.2
+        control_timeout: 0.1
 
         control_config: [true, true, false, false, false, true]
 
@@ -100,4 +102,18 @@ ekf_velocity:
                                    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.01, 0.0,
                                    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.015]
 
-        initial_estimate_covariance: [1e-9, 1e-9, 1e-9, 1e-9, 1e-9, 1e-9, 1e-9, 1e-9, 1e-9, 1e-9, 1e-9, 1e-9, 1e-9, 1e-9, 1e-9]
+        initial_estimate_covariance: [1e-9, 0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+                                      0.0,    1e-9, 0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+                                      0.0,    0.0,    1e-9, 0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+                                      0.0,    0.0,    0.0,    1e-9, 0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+                                      0.0,    0.0,    0.0,    0.0,    1e-9, 0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+                                      0.0,    0.0,    0.0,    0.0,    0.0,    1e-9, 0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+                                      0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    1e-9, 0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+                                      0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    1e-9, 0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+                                      0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    1e-9, 0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+                                      0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    1e-9,  0.0,     0.0,     0.0,    0.0,    0.0,
+                                      0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     1e-9,  0.0,     0.0,    0.0,    0.0,
+                                      0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     1e-9,  0.0,    0.0,    0.0,
+                                      0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     1e-9, 0.0,    0.0,
+                                      0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    1e-9, 0.0,
+                                      0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    1e-9]
