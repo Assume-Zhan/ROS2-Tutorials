@@ -43,6 +43,11 @@ def generate_launch_description():
         FindPackageShare("simulation"), 
         "gazebo", "sim_world.world"
     ])
+    
+    slam_param_path = PathJoinSubstitution([
+        FindPackageShare("simulation"), 
+        "config", "mapper_online_async.yaml"
+    ])
     # -------------------------------
     
     # Declare argument ( Namespace )
@@ -54,6 +59,11 @@ def generate_launch_description():
     world = LaunchConfiguration("world")
     world_arg = DeclareLaunchArgument(
         "world", default_value = world_path
+    )
+    
+    slam_param = LaunchConfiguration("slam_param")
+    slam_params_arg = DeclareLaunchArgument(
+        'slam_param', default_value = slam_param_path
     )
     # -------------------------------
     
@@ -72,11 +82,6 @@ def generate_launch_description():
         name = "rviz2",
         arguments = ["-d", [rviz_path]],
         parameters=[{'use_sim_time': False}]
-    )
-    
-    gazebo = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(gazebo_path),
-        launch_arguments={'world': world}.items()
     )
     
     # Static TF : base_footprint -> base_link
@@ -105,12 +110,20 @@ def generate_launch_description():
         arguments = ["0", "0", "0", "0", "0", "0", "base_link", "imu_link"],
         parameters=[{'use_sim_time': True}]
     )
+
+    slam = Node(
+        parameters=[
+          slam_param,
+          {'use_sim_time': True}
+        ],
+        package='slam_toolbox',
+        executable='async_slam_toolbox_node',
+        name='slam_toolbox'
+    )
     
-    slam = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(slam_toolbox_path),
-        launch_arguments={
-            'use_sim_time': "True",
-        }.items()
+    gazebo = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(gazebo_path),
+        launch_arguments={'world': world}.items()
     )
     
     local = IncludeLaunchDescription(
@@ -121,7 +134,7 @@ def generate_launch_description():
     # Launch description
     return LaunchDescription([
         # Arguments
-        sim_ns_arg, world_arg,
+        sim_ns_arg, world_arg, slam_params_arg,
         
         # Env
         gazebo_env,
